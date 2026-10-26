@@ -1,0 +1,70 @@
+proxy:
+  listen_host: "127.0.0.1"
+  listen_port: 8443
+  upstream_host: "127.0.0.1"
+  upstream_port: 5000
+  health_port: 8080
+  request_timeout: 10
+
+tls:
+  cert_file: "certs/server.crt"
+  key_file: "certs/server.key"
+  ca_file: "certs/ca.crt"
+  mutual_tls: true
+
+authentication:
+  oauth2:
+    enabled: true
+    secret: "sprint3-demo-secret-change-me-0123456789"
+    issuer: "https://idp.example.com"
+    audience: "secure-proxy"
+  ldap:
+    enabled: true
+    server: "ldap://127.0.0.1:389"
+    base_dn: "dc=secureproxy,dc=local"
+    user_dn_template: "uid={username},ou=people,dc=secureproxy,dc=local"
+    group_base_dn: "ou=groups,dc=secureproxy,dc=local"
+    group_role_map:
+      admins: "admin"
+      engineers: "user"
+
+ip_filter:
+  enabled: true
+  # If whitelist is non-empty, ONLY these ranges are allowed.
+  whitelist: []
+  # Blacklisted ranges are always rejected.
+  blacklist:
+    - "192.0.2.0/24"
+    - "203.0.113.66/32"
+
+rbac:
+  enabled: true
+  # Which HTTP methods each role may use
+  roles:
+    admin:  ["GET", "POST", "PUT", "DELETE"]
+    user:   ["GET", "POST"]
+    device: ["GET"]
+    guest:  []
+  # Role given when the identity source doesn't provide one
+  default_roles:
+    certificate: "device"
+    jwt: "user"
+    unknown: "guest"
+
+rate_limiting:
+  enabled: true
+  window_seconds: 60
+  # Maximum requests per window, per client IP, by role
+  quotas:
+    admin: 100
+    user: 60
+    device: 30
+    guest: 10
+  default_quota: 20
+
+waf:
+  enabled: true
+  # Header names to strip before forwarding (never expose these upstream)
+  strip_headers:
+    - "x-forwarded-for"
+    - "x-real-ip"

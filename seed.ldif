@@ -1,0 +1,28 @@
+dn: ou=groups,dc=secureproxy,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: ou=people,dc=secureproxy,dc=local
+objectClass: organizationalUnit
+ou: people
+
+dn: uid=carol,ou=people,dc=secureproxy,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: carol
+sn: Carol
+givenName: Carol
+cn: Carol Admin
+displayName: Carol Admin
+uidNumber: 1001
+gidNumber: 1001
+userPassword: carol_pw_123
+gecos: Carol Admin
+loginShell: /bin/bash
+homeDirectory: /home/carol
+
+dn: cn=admins,ou=groups,dc=secureproxy,dc=local
+objectClass: groupOfNames
+cn: admins
+member: uid=carol,ou=people,dc=secureproxy,dc=local

@@ -1,0 +1,17 @@
+# Virtual environment — never versioned
+.venv/
+
+# Logs — runtime output, not source
+logs/
+
+# Private keys and generated certificates — NEVER commit secrets
+certs/
+*.key
+*.crt
+*.srl
+
+# Python cache
+__pycache__/
+*.pyc
+CLAUDE.md
+venv/
