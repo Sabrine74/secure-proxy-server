@@ -39,3 +39,6 @@ Guide de test complet : [TESTING_GUIDE.md](TESTING_GUIDE.md)
 ## Dépannage
 - `address already in use` : `pkill -f proxy.main`, puis relancer.
 - Erreur de certificat : relancer `bash scripts/generate_certs.sh`.
+
+## Sécurité
+Les identifiants de `seed.ldif` et des tests sont des valeurs de démonstration. Les certificats et clés sont générés localement par `scripts/generate_certs.sh` (dossier `certs/`, non versionné).
